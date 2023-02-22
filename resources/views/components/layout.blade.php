@@ -10,7 +10,7 @@
     <title>{{ $title }}</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'public/css/layout.css'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
