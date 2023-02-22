@@ -1,0 +1,77 @@
+@import url('variables.css');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300 !important;400 !important;500 !important;600 !important;700 !important;800&display=swap'); */
+
+html {
+    font-size: 14px !important;
+}
+
+body {
+    width: 100dvw;
+    height: 100cvh;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 0.88rem !important;
+    background-color: var(--color-background) !important;
+}
+
+aside {
+    height: 100dvh !important;
+}
+
+aside img {
+    margin-top: -1rem !important;
+}
+
+aside h3 {
+    font-weight: 500 !important;
+}
+
+aside .sidebar a {
+    display: flex !important;
+    color: var(--color-info-dark) !important;
+    gap: 1rem !important;
+    align-items: center !important;
+    position: relative !important;
+    height: 2.7rem !important;
+    transition: all 300ms ease !important;
+}
+
+aside .sidebar a span {
+    transition: all 300ms ease !important;
+}
+
+.active {
+    background: var(--color-light) !important;
+    margin-left: 0 !important;
+}
+
+.active h3 {
+    color: var(--color-primary) !important;
+}
+
+.active:before {
+    content: "" !important;
+    width: 6px !important;
+    height: 100% !important;
+    background: var(--color-primary) !important;
+}
+
+.active span {
+    color: var(--color-primary) !important;
+    margin-left: calc(2rem - 3px) !important;
+}
+
+a:hover.active span {
+    margin-left: 2rem !important;
+}
+
+a:hover:not(.active) {
+    color: var(--color-primary) !important;
+}
+
+aside .sidebar a:hover:not(.active) span {
+    margin-left: 1rem !important;
+}
+
+a:not(.active) {
+    margin-left: 2rem !important;
+}

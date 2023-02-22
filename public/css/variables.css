@@ -1,0 +1,107 @@
+:root {
+    --color-primary: #4e73df !important;
+    --color-danger: #e74a3b !important;
+    --color-success: #1cc88a !important;
+    --color-partial: #ccd725 !important;
+    --color-warning: #f6c23e !important;
+    --color-white: #fff !important;
+    --color-info: #36b9cc !important;
+    --color-secondary: #858796 !important;
+    --color-dark: #5a5c69 !important;
+    --color-light: rgba(132, 139, 200, 0.18) !important;
+    --color-info-dark: #7d8da1 !important;
+    --color-background: #f2f5f9 !important;
+
+    --card-border-radius: 2rem !important;
+    --border-radius-1: 0.4rem !important;
+    --border-radius-2: 0.8rem !important;
+    --border-radius-3: 1.2rem !important;
+
+    --card-padding: 1.8rem !important;
+    --padding-1: 1.2rem !important;
+    --padding-2: .5em 1rem !important;
+
+    --box-shadow: 0 2rem 3rem var(--color-light) !important;
+}
+
+.primary {
+    color: var(--color-primary);
+}
+
+.danger {
+    color: var(--color-danger);
+}
+
+.success {
+    color: var(--color-success);
+}
+
+.warning {
+    color: var(--color-warning);
+}
+
+.secondary {
+    color: var(--color-secondary);
+}
+
+.dark {
+    color: var(--color-dark);
+}
+
+.white {
+    color: var(--color-white) !important;
+}
+
+.muted {
+    color: var(--color-info-dark) !important;
+}
+
+.bg-my-primary {
+    background: var(--color-primary) !important;
+}
+
+.bg-my-secondary {
+    background: var(--color-secondary) !important;
+}
+
+.bg-my-light {
+    background: var(--color-light) !important;
+}
+
+.bg-my-white {
+    background: var(--color-white) !important;
+}
+
+.bg-my-info-dark {
+    background: var(--color-info-dark) !important;
+}
+
+small {
+    /* font-weight: 600 !important; */
+    font-size: .75rem !important;
+}
+
+h1 {
+    font-weight: 800 !important;
+    font-size: 1.8rem !important;
+}
+
+h2 {
+    font-size: 1.4rem !important;
+}
+
+h3 {
+    font-size: .89rem !important;
+}
+
+h4 {
+    font-size: 0.8rem !important;
+}
+
+h5 {
+    font-size: 0.77rem !important;
+}
+
+small {
+    font-size: 0.75rem !important;
+}
