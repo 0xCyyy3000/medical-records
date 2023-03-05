@@ -64,6 +64,14 @@
     background: var(--color-secondary) !important;
 }
 
+.bg-my-warning {
+    background-color: var(--color-warning) !important;
+}
+
+.bg-my-success {
+    background-color: var(--color-success) !important;
+}
+
 .bg-my-light {
     background: var(--color-light) !important;
 }
@@ -74,6 +82,38 @@
 
 .bg-my-info-dark {
     background: var(--color-info-dark) !important;
+}
+
+.btn-my-primary {
+    background-color: var(--color-primary) !important;
+    transition: all 300ms ease !important;
+}
+
+.btn-my-danger {
+    background-color: var(--color-danger) !important;
+    transition: all 300ms ease !important;
+}
+
+.btn-my-primary:hover {
+    background-color: var(--color-primary) !important;
+    transform: scale(110%) !important;
+}
+
+.btn-my-danger:hover {
+    background-color: var(--color-danger) !important;
+    transform: scale(110%) !important;
+}
+
+.alert-my-success {
+    background-color: var(--color-success) !important;
+    color: var(--color-white) !important;
+    font-size: larger;
+}
+
+.alert-my-danger {
+    background-color: var(--color-danger) !important;
+    color: var(--color-white) !important;
+    font-size: larger;
 }
 
 small {
@@ -104,4 +144,9 @@ h5 {
 
 small {
     font-size: 0.75rem !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
 }

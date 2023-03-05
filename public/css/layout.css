@@ -2,14 +2,14 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300 !important;400 !important;500 !important;600 !important;700 !important;800&display=swap'); */
 
 html {
-    font-size: 14px !important;
+    font-size: 15px !important;
 }
 
 body {
-    width: 100dvw;
-    height: 100cvh;
+    width: 100dvw !important;
+    height: 100dvh !important;
     font-family: 'Poppins', sans-serif !important;
-    font-size: 0.88rem !important;
+    /* font-size: 0.88rem !important; */
     background-color: var(--color-background) !important;
 }
 
@@ -64,7 +64,7 @@ a:hover.active span {
     margin-left: 2rem !important;
 }
 
-a:hover:not(.active) {
+a:hover:not(.active):not(.table-link) {
     color: var(--color-primary) !important;
 }
 
@@ -72,6 +72,51 @@ aside .sidebar a:hover:not(.active) span {
     margin-left: 1rem !important;
 }
 
-a:not(.active) {
+a:not(.active):not(.table-link) {
     margin-left: 2rem !important;
+}
+
+[data-id="age"] {
+    margin: auto !important;
+    width: 95px !important;
+    /* padding: 0 !important; */
+}
+
+.action button {
+    transition: all 300ms ease !important;
+}
+
+.action button:hover {
+    transform: scale(105%) !important;
+}
+
+.action button:hover:first-child {
+    background-color: var(--color-primary) !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+    padding-left: 0.35rem !important;
+    padding-right: 0.35rem !important;
+}
+
+.action button:hover:nth-child(2) {
+    background-color: var(--color-danger) !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+    padding-left: 0.35rem !important;
+    padding-right: 0.35rem !important;
+}
+
+.action button:hover span {
+    color: var(--color-white) !important;
+}
+
+.save-changes button {
+    transition: all 300ms ease !important;
+}
+
+.save-changes:hover button {
+    transform: scale(105%) !important;
+    background-color: transparent !important;
+    color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
 }

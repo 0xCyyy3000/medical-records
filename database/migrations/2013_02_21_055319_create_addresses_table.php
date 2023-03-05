@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->longText('street');
             $table->longText('city');
-            $table->longText('state');
+            $table->longText('province');
             $table->string('country')->default('Philippines');
-            $table->integer('postal_code')->nullable();
+            $table->integer('zip_code')->nullable();
             $table->timestamps();
         });
     }

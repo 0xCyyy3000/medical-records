@@ -18,12 +18,14 @@ return new class extends Migration
             $table->string('middle_name');
             $table->string('last_name');
             $table->string('gender');
-            $table->string('marital_status');
-            $table->string('email')->unique();
+            $table->string('civil_status');
+            $table->string('email')->unique()->nullable();
             $table->string('phone_number')->unique();
             $table->string('birthdate');
+            $table->integer('age')->nullable();
             $table->string('birthplace');
             $table->foreignId('address')->constrained('addresses');
+            $table->longText('city')->nullable();
             $table->timestamps();
         });
     }

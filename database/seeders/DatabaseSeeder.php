@@ -29,15 +29,15 @@ class DatabaseSeeder extends Seeder
         Address::create([
             'street' => 'Liko-liko street',
             'city' => 'Tacloban City',
-            'state' => 'Leyte',
-            'postal_code' => 6500
+            'province' => 'Leyte',
+            'zip_code' => 6500
         ]);
 
         Address::create([
             'street' => 'Kalawakan street',
             'city' => 'Tacloban City',
-            'state' => 'Leyte',
-            'postal_code' => 6500
+            'province' => 'Leyte',
+            'zip_code' => 6500
         ]);
 
         User::create([
@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
             'middle_name' => 'Patient',
             'last_name' => 'One',
             'gender' => 'Male',
-            'marital_status' => 'Single',
+            'civil_status' => 'Single',
             'email' => 'test_patient@one.com',
             'phone_number' => '09987654321',
             'birthdate' => '01/01/2000',

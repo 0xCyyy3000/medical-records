@@ -15,4 +15,24 @@ class PageController extends Controller
             ]
         );
     }
+
+    public function addPatient()
+    {
+        return view(
+            'pages.add-patient',
+            [
+                'title' => 'Add Patient'
+            ]
+        );
+    }
+
+    public function patients()
+    {
+        return view(
+            'pages.patients',
+            [
+                'title' => 'Patients'
+            ]
+        );
+    }
 }
