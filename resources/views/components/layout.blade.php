@@ -80,7 +80,7 @@
                     {{-- <h2 class="fw-bold text-white">{{ $title }}</h2> --}}
                 </div>
             </div>
-            <main class="mt-4">
+            <main class="my-4">
                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                         <div class="toast-header">
@@ -101,7 +101,7 @@
     </div>
 
     {{-- For alerts --}}
-    <script>
+    {{-- <script>
         // const has_alert = "{{ Session::has('alert') }}";
         // const alert_message = "{{ Session::get('alert') }}";
 
@@ -110,14 +110,7 @@
         // if (has_alert) {
 
         // }
-
-        $(document).ready(function() {
-            $('#datepicker').datepicker({
-                uiLibrary: 'bootstrap5',
-
-            })
-        });
-    </script>
+    // </script> --}}
     @livewireScripts
     @powerGridScripts
 </body>

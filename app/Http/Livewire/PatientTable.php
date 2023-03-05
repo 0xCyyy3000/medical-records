@@ -176,7 +176,7 @@ final class PatientTable extends PowerGridComponent
 
     public function header(): array
     {
-        return [
+    return [
             Button::make('create', 'Add patient')
                 ->class('btn btn-my-primary text-white border-0 text-decoration-none table-link')
                 ->route('add.patient', [])

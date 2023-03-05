@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('birthplace');
             $table->foreignId('address')->constrained('addresses');
             $table->longText('city')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

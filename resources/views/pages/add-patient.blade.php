@@ -3,7 +3,7 @@
         <form class="position-relative " method="POST" action="{{ route('patient.store') }}">
             @csrf
             <section class="row grid-3 mb-4">
-                <h2 class=" fw-semibold mb-3">Personal Information</h2>
+                <h2 class=" fw-semibold mb-3">Patient Information</h2>
                 <div class="col-md-4 mb-3">
                     <label for="first_name" class="form-label">First name</label>
                     <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name"
@@ -65,9 +65,9 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="birthdate" class="form-label">Birthdate</label>
-                    <input type="text" id="datepicker" placeholder="mm/dd/yyyy"
+                    <input type="text" placeholder="mm/dd/yyyy"
                         class="form-control @error('birthdate') is-invalid @enderror" id="birthdate" name="birthdate"
-                        value="{{ old('birthdate') }}">
+                        value="{{ old('birthdate') }}" autocomplete="off">
                     @error('birthdate')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -153,6 +153,71 @@
                 </div>
             </section>
 
+            <section class="row grid-3 mb-3">
+                <h2 class="fw-semibold mb-3">Vital Signs</h2>
+                <div class="col-md-3 mb-3">
+                    <label for="blood_pressure" class="form-label">Blood pressure</label>
+                    <input type="text" class="form-control @error('blood_pressure') is-invalid @enderror"
+                        id="blood_pressure" name="blood_pressure" value="{{ old('blood_pressure') }}">
+                    @error('blood_pressure')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="respiratory_rate" class="form-label">Respiratory rate</label>
+                    <input type="text" class="form-control @error('respiratory_rate') is-invalid @enderror"
+                        id="respiratory_rate" name="respiratory_rate" value="{{ old('respiratory_rate') }}">
+                    @error('respiratory_rate')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="capillary_refill" class="form-label">Capillary refill</label>
+                    <input type="text" class="form-control @error('capillary_refill') is-invalid @enderror"
+                        id="capillary_refill" name="capillary_refill" value="{{ old('capillary_refill') }}">
+                    @error('capillary_refill')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="pulse_rate" class="form-label">Pulse rate</label>
+                    <input type="text" class="form-control @error('pulse_rate') is-invalid @enderror"
+                        id="pulse_rate" name="pulse_rate" value="{{ old('pulse_rate') }}">
+                    @error('pulse_rate')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="temperature" class="form-label">Temperature</label>
+                    <input type="text" class="form-control @error('temperature') is-invalid @enderror"
+                        id="temperature" name="temperature" value="{{ old('temperature') }}">
+                    @error('temperature')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="weight" class="form-label">Weight</label>
+                    <input type="text" class="form-control @error('weight') is-invalid @enderror" id="weight"
+                        name="weight" value="{{ old('weight') }}">
+                    @error('weight')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+            </section>
+
             <div class="col-md-12 py-3">
                 <button type="submit" class="btn btn-my-primary text-white float-end rounded-2">
                     Add patient</button>
@@ -160,5 +225,14 @@
                     class="text-decoration-none float-end p-2 primary me-4">Cancel</a>
             </div>
         </form>
+
+        <script>
+            $(document).ready(function() {
+                $('#birthdate').datepicker({
+                    uiLibrary: 'bootstrap5',
+
+                })
+            });
+        </script>
     </div>
 </x-layout>

@@ -82,11 +82,15 @@ a:not(.active):not(.table-link) {
     /* padding: 0 !important; */
 }
 
-.action button {
+.action button,
+.final-action button,
+.modal-actions button {
     transition: all 300ms ease !important;
 }
 
-.action button:hover {
+.action button:hover,
+.final-action button:hover,
+.modal-actions button:hover {
     transform: scale(105%) !important;
 }
 
@@ -106,7 +110,24 @@ a:not(.active):not(.table-link) {
     padding-right: 0.35rem !important;
 }
 
-.action button:hover span {
+.final-action button:hover:first-child {
+    background-color: var(--color-secondary) !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+    padding-left: 0.35rem !important;
+    padding-right: 0.35rem !important;
+}
+
+.final-action button:hover:nth-child(2) {
+    background-color: var(--color-primary) !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+    padding-left: 0.35rem !important;
+    padding-right: 0.35rem !important;
+}
+
+.action button:hover span,
+.final-action button:hover span {
     color: var(--color-white) !important;
 }
 
