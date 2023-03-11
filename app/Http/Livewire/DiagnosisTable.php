@@ -2,24 +2,29 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Address;
-use App\Models\Patient;
+use App\Models\Diagnosis;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use PowerComponents\LivewirePowerGrid\Button;
-use PowerComponents\LivewirePowerGrid\Column;
-use PowerComponents\LivewirePowerGrid\Footer;
-use PowerComponents\LivewirePowerGrid\Header;
-use PowerComponents\LivewirePowerGrid\PowerGrid;
-use PowerComponents\LivewirePowerGrid\Exportable;
-use PowerComponents\LivewirePowerGrid\PowerGridEloquent;
-use PowerComponents\LivewirePowerGrid\PowerGridComponent;
-use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
+use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
+use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class PatientTable extends PowerGridComponent
+final class DiagnosisTable extends PowerGridComponent
 {
     use ActionButton;
+
+    public int $patient;
+    public ?array $diagnosis = null;
+    public ?array $prescription = null;
+    public ?array $doctor = null;
+    public ?array $date = null;
+
+    protected array $rules = [
+        'diagnosis.*' => ['required'],
+        'prescription.*' => ['required'],
+        'doctor.*' => ['required'],
+        'date.*' => ['required'],
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -54,11 +59,11 @@ final class PatientTable extends PowerGridComponent
     /**
      * PowerGrid datasource.
      *
-     * @return Builder<\App\Models\Patient>
+     * @return Builder<\App\Models\Diagnosis>
      */
     public function datasource(): Builder
     {
-        return Patient::query();
+        return Diagnosis::query()->where('patient', $this->patient);
     }
 
     /*
@@ -94,13 +99,10 @@ final class PatientTable extends PowerGridComponent
     {
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('first_name', function (Patient $patient) {
-                return "{$patient->last_name}, {$patient->first_name} {$patient->middle_name}";
-            })
-            ->addColumn('gender')
-            ->addColumn('civil_status')
-            ->addColumn('age')
-            ->addColumn('city');
+            ->addColumn('diagnosis')
+            ->addColumn('prescription')
+            ->addColumn('date')
+            ->addColumn('doctor');
     }
 
     /*
@@ -121,28 +123,68 @@ final class PatientTable extends PowerGridComponent
     {
         return [
             Column::make('ID', 'id')->sortable(),
-            Column::make('PATIENT NAME', 'first_name')
-                ->sortable()
-                ->searchable(),
-            Column::make('GENDER', 'gender')
-                ->sortable()
-                ->searchable()
-                ->makeInputSelect(Patient::distinct()->get('gender'), 'gender', 'gender'),
-            Column::make('CIVIL STATUS', 'civil_status')
+            Column::add()
+                ->title('DIAGNOSIS')
+                ->field('diagnosis')
                 ->sortable()
                 ->searchable()
-                ->makeInputSelect(Patient::distinct()->get('civil_status'), 'civil_status', 'civil_status'),
-            Column::make('AGE', 'age')
-                ->makeInputRange('age')
+                ->editOnClick(true, 'diagnosis', null, true),
+            Column::add()
+                ->title('PRESCRIPTION')
+                ->field('prescription')
+                ->sortable()
+                ->searchable()
+                ->editOnClick(true, 'prescription', null, true),
+            Column::add()
+                ->title('ISSUED DATE')
+                ->field('date')
+                ->makeInputDatePicker()
+                ->editOnClick(true, 'date', null, true)
+                ->searchable()
                 ->sortable(),
-            Column::make('City/Municipality', 'city')
+            Column::add()
+                ->title('DOCTOR/CONSULTANT')
+                ->field('doctor')
                 ->makeInputSelect(
-                    Patient::distinct()->get('city'),
-                    'city',
-                )->sortable()
+                    Diagnosis::distinct()->get('doctor'),
+                    'doctor'
+                )
+                ->sortable()
                 ->searchable()
+                ->editOnClick(true, 'doctor', null, true)
         ];
     }
+
+    public function onUpdatedEditable($id, $field, $value): void
+    {
+        $this->validate();
+        Diagnosis::query()->find($id)->update([$field => $value]);
+    }
+
+    public function header(): array
+    {
+        // return [
+        //     Button::make('create', 'Add Record')
+        //         ->class('btn btn-my-primary text-white border-0 text-decoration-none table-link add_record')
+        //         ->route('diagnosis.create', ['patient' => $this->patient])
+        //         ->target('_self'),
+        // ];
+
+        return [
+            Button::add('add-record')
+                ->caption('Add Record')
+                ->class('btn btn-my-primary text-white border-0 text-decoration-none table-link')
+                ->emit(
+                    'showModal',
+                    [
+                        'editing' => false,
+                        'title' => 'Add Medical Record',
+                        'patient' => $this->patient
+                    ]
+                ),
+        ];
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -153,30 +195,40 @@ final class PatientTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Patient Action Buttons.
+     * PowerGrid Diagnosis Action Buttons.
      *
      * @return array<int, Button>
      */
 
+
     public function actions(): array
     {
         return [
-            Button::make('view', 'View details')
-                ->class('primary text-decoration-none')
-                ->route('patient.select', ['patient' => 'id'])
-                ->target('_self'),
+            Button::make('edit', 'Edit')
+                ->class('primary border-0 bg-transparent mb-1 text-sm m-auto w-auto')
+                ->emit(
+                    'showModal',
+                    [
+                        'editing' => true,
+                        'title' => 'Editing Medical Record',
+                        'id' => 'id',
+                        'date' => 'date',
+                        'diagnosis' => 'diagnosis',
+                        'doctor' => 'doctor',
+                        'prescription' => 'prescription'
+                    ]
+                ),
+            Button::make('destroy', 'Delete')
+                ->class('danger border-0 bg-transparent text-sm m-auto w-auto')
+                ->emit(
+                    'showWarningModal',
+                    [
+                        'id' => 'id',
+                    ]
+                ),
         ];
     }
 
-    public function header(): array
-    {
-        return [
-            Button::make('create', 'Add patient')
-                ->class('btn btn-my-primary text-white border-0 text-decoration-none table-link')
-                ->route('add.patient', [])
-                ->target('_self'),
-        ];
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -187,7 +239,7 @@ final class PatientTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Patient Action Rules.
+     * PowerGrid Diagnosis Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -199,7 +251,7 @@ final class PatientTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($patient) => $patient->id === 1)
+                ->when(fn($diagnosis) => $diagnosis->id === 1)
                 ->hide(),
         ];
     }

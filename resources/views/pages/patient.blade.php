@@ -4,13 +4,13 @@
             <span class="material-icons-sharp fs-5">
                 arrow_back_ios
             </span>
-            Go back
+            Patient Records
         </a>
     </div>
 
-    {{-- Modal --}}
-    <div class="modal fade" id="removeWarningModal" tabindex="-1" aria-labelledby="removeWarningModalLabel"
-        aria-hidden="true">
+    {{-- Warning Modal --}}
+    <div class="modal fade" id="removeWarningModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="removeWarningModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header border-0">
@@ -21,19 +21,154 @@
                     <br>This action cannot be undone.
                 </div>
                 <div class="modal-footer border-0 modal-actions">
-                    <button type="button" class="btn primary" data-bs-dismiss="modal">No, cancel</button>
+                    <button type="button" class="btn primary" data-bs-dismiss="modal"
+                        style="color: var(--color-white) !important; background: var(--color-info-dark) !important;">No,
+                        don't proceed</button>
                     <form action="{{ route('patient.destroy', ['patient' => $patient->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-my-danger text-white">Yes, proceed</button>
+                        <button type="submit" class="btn"
+                            style="color: var(--color-danger) !important; border: solid 1px var(--color-danger) !important;">Yes,
+                            proceed</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row pt-3 mb-3" style="--bs-gutter-x: 0rem !important;" id="patient">
-        <div class="bg-white rounded-4 col ms-4 shadow">
+    {{-- Add Medical Record Modal --}}
+    <div class="modal fade" id="addMedicalRecord" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="medicalRecordLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form method="POST" action="{{ route('diagnosis.store', ['patient' => $patient->id]) }}">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h1 class="modal-title fs-5" id="medicalRecordLabel">Add Medical Record</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3 p-2">
+                            <div class="col-md-5">
+                                <label for="date" class="form-label">Issued Date</label>
+                                <input type="text" placeholder="mm/dd/yyyy" class="form-control date-issue"
+                                    name="date" readonly required>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" required placeholder="Doctor/Consultant"name="doctor" style="height: 50px"></textarea>
+                                    <label for="doctor">Doctor/Consultant</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" required placeholder="Diagnosis/Findings"name="diagnosis" style="height: 100px"></textarea>
+                                    <label for="diagnosis">Diagnosis/Findings</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" required placeholder="Prescription"name="prescription" style="height: 100px"></textarea>
+                                    <label for="prescription">Prescription</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn bg-my-secondary text-white"
+                            data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-my-primary text-white">Save record</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- Edit Medical Record Modal --}}
+    <div class="modal fade" id="editMedicalRecord" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="editMedicalRecordLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form method="POST" action="{{ route('diagnosis.update') }}">
+                @csrf
+                @method('PUT')
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h1 class="modal-title fs-5" id="editMedicalRecordLabel">Add Medical Record</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3 p-2">
+                            <div class="col-md-5">
+                                <label for="date" class="form-label">Issued Date</label>
+                                <input type="text" placeholder="mm/dd/yyyy" class="form-control date-issue"
+                                    name="date" id="date" readonly required>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" required placeholder="Doctor/Consultant"name="doctor" id="doctor"
+                                        style="height: 50px"></textarea>
+                                    <label for="doctor">Doctor/Consultant</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" required placeholder="Diagnosis/Findings"name="diagnosis" id="diagnosis"
+                                        style="height: 100px"></textarea>
+                                    <label for="diagnosis">Diagnosis/Findings</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" required placeholder="Prescription"name="prescription" id="prescription"
+                                        style="height: 100px"></textarea>
+                                    <label for="prescription">Prescription</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn bg-my-secondary text-white"
+                            data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" name="did" id="diagnosis_edit"
+                            class="btn btn-my-primary text-white">
+                            Update medical record
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- Warning Diagnosis Record Modal --}}
+    <div class="modal fade" id="removeDiagnosisModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="removeDiagnosisModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="removeDiagnosisModalLabel">Removing Medical Record</h1>
+                </div>
+                <div class="modal-body py-2">
+                    You are about to remove this medical record, do you want to proceed?
+                    <br>This action cannot be undone.
+                </div>
+                <div class="modal-footer border-0 modal-actions">
+                    <button type="button" class="btn primary" data-bs-dismiss="modal"
+                        style="color: var(--color-white) !important; background: var(--color-info-dark) !important;">No,
+                        don't proceed</button>
+                    <form id="deleteDiagnosis" action="{{ route('diagnosis.destroy') }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn" name="diagnosis" id="diagnosis_delete"
+                            style="color: var(--color-danger) !important; border: solid 1px var(--color-danger) !important;">Yes,
+                            proceed</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row p-4 mb-3" style="--bs-gutter-x: 0rem !important;" id="patient">
+        <div class="bg-white rounded-4 col shadow">
             <form class="position-relative p-5" method="POST" id="patient_form"
                 action="{{ route('patient.update', ['patient' => $patient->id]) }}">
                 @method('PUT')
@@ -159,6 +294,17 @@
                             </span>
                         @enderror
                     </div>
+                    <div class="col-md-2 mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="text" class="form-control @error('age') is-invalid @enderror "
+                            id="age" name="age" placeholder="Dela Cruz" readonly
+                            value="@if (old('age')) {{ old('age') }} @else{{ $patient->age }} @endif">
+                        @error('age')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
 
                     <div class="col-md-5 mb-3">
                         <label for="birthdate" class="form-label">Birthplace</label>
@@ -253,7 +399,7 @@
             </form>
         </div>
         <div class="col-md-3 px-3 vital-signs">
-            <div class="container bg-white rounded-4 p-3 shadow">
+            <div class="container bg-white rounded-4 p-2 shadow">
                 <div class="d-flex align-items-center gap-5">
                     <h2 class="fs-5 fw-semibold mb-1 p-2">Vital Signs</h2>
                     <div class="form-check form-switch">
@@ -358,6 +504,13 @@
         </div>
     </div>
 
+    <div class="row mb-3 p-4" style="--bs-gutter-x: 0rem !important;">
+        <div class="bg-white rounded-4 col shadow p-5">
+            <h2 class="fw-semibold mb-4 mt-2">Medical Records</h2>
+            <livewire:diagnosis-table patient="{{ $patient->id }}" />
+        </div>
+    </div>
+
     <script>
         $(document).ready(function() {
             $(document).on('change', '.edit-vitals', function() {
@@ -386,6 +539,12 @@
             $(document).on('click', '.cancel-edit', function() {
                 location.reload();
             });
+
+            $('.date-issue').datepicker({
+                uiLibrary: 'bootstrap5',
+                modal: true,
+                footer: true,
+            })
         });
     </script>
 

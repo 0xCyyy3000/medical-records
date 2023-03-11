@@ -11,6 +11,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        @livewire('patient-table')
+        <div class="row p-3 pt-0 mt-3">
+            <h2 class="fw-semibold mb-4">Patient Records Table</h2>
+            <div class="rounded-4 bg-white p-4 shadow">
+                @livewire('patient-table')
+            </div>
+        </div>
     </div>
 </x-layout>

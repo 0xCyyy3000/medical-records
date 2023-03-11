@@ -60,6 +60,10 @@
     background: var(--color-primary) !important;
 }
 
+.bg-my-danger {
+    background: var(--color-danger) !important;
+}
+
 .bg-my-secondary {
     background: var(--color-secondary) !important;
 }
@@ -153,4 +157,13 @@ small {
 .form-check-input:checked {
     background-color: var(--color-primary) !important;
     border-color: var(--color-primary) !important;
+}
+
+span.badge.bg-light {
+    background: var(--color-warning) !important;
+    color: var(--color-white) !important;
+}
+
+textarea {
+    resize: none !important;
 }

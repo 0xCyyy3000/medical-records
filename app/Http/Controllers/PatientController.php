@@ -99,7 +99,13 @@ class PatientController extends Controller
             'email' => ($request->email and $request->email != $patient->email) ? ['email:rfc,dns, unique:patients', 'max:255'] : '',
             'phone_number' => ($request->phone_number and $request->phone_number != $patient->phone_number) ? ['required', 'unique:patients', 'digits:11', 'numeric'] :
                 ['required', 'digits:11', 'numeric'],
+            'city' => ['required', 'max:255']
         ]);
+
+        $today = date('m/d/Y');
+        $difference = date_diff(date_create($patient_info['birthdate']), date_create(Carbon::parse($today)->format('m/d/Y')));
+        $age = $difference->format('%y');
+        $patient_info['age'] = $age;
 
         $patient_address = $request->validate([
             'street' => ['required', 'max:255'],

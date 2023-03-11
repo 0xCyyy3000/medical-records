@@ -1,0 +1,11 @@
+table {
+    background-color: var(--color-white) !important;
+}
+
+.power-grid-table thead {
+    background-color: var(--color-dark) !important;
+}
+
+.power-grid-table thead tr th {
+    color: var(--color-white) !important;
+}

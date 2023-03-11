@@ -10,13 +10,14 @@
     <title>{{ $title }}</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}">
     <script src="{{ asset('js/jquery-3.6.3.min.js') }}"></script>
     <script src="{{ asset('js/gijgo.min.js') }}" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @livewireStyles
     @powerGridStyles
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 </head>
 
@@ -52,7 +53,7 @@
                     ? 'active'
                     : '' }}">
                     <span class="material-icons-sharp ">groups</span>
-                    <h3 class="m-auto ms-0 ">Patient List</h3>
+                    <h3 class="m-auto ms-0 ">Patient Records</h3>
                 </a>
 
                 <a href="#" class="align-items-center text-decoration-none">
@@ -74,7 +75,7 @@
             </div>
         </aside>
         <div class="col-md-10 px-0">
-            <div class="container p-3 border-bottom border-2 bg-my-primary sticky-top">
+            <div class="p-3 border-bottom border-2 bg-my-primary sticky-top">
                 <div class="d-flex gap-2 mt-1">
                     {{-- <span class="material-icons-sharp text-white person">person_outline</span> --}}
                     {{-- <h2 class="fw-bold text-white">{{ $title }}</h2> --}}
@@ -113,6 +114,25 @@
     // </script> --}}
     @livewireScripts
     @powerGridScripts
+    <script>
+        Livewire.on('showModal', data => {
+            $('#medicalRecordLabel').text(data.title);
+            if (data.editing) {
+                $('#date').val(data.date);
+                $('#diagnosis').val(data.diagnosis);
+                $('#doctor').val(data.doctor);
+                $('#prescription').val(data.prescription);
+                $("#editMedicalRecord").modal('show');
+                $('#diagnosis_edit').val(data.id);
+            } else
+                $("#addMedicalRecord").modal('show');
+        });
+
+        Livewire.on('showWarningModal', data => {
+            $('#removeDiagnosisModal').modal('show');
+            $('#diagnosis_delete').val(data.id);
+        });
+    </script>
 </body>
 
 </html>
