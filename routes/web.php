@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\VitalSignController;
@@ -36,10 +37,8 @@ Route::delete('/patient/destroy/{patient}', [PatientController::class, 'destroy'
 
 Route::post('/update/vitals/{patient}', [VitalSignController::class, 'update'])->name('patient.vitals.update');
 
-Route::group(['middleware' => 'guest', 'prefix' => '/patient/diagnosis'], function () {
-    // Route::get('/create/{patient}', [DiagnosisController::class, 'create'])->name('diagnosis.create');
-    // Route::get('/edit/{diagnosis}', [DiagnosisController::class, 'store'])->name('diagnosis.edit');
-    Route::post('/store/{patient}', [DiagnosisController::class, 'store'])->name('diagnosis.store');
-    Route::put('/update', [DiagnosisController::class, 'update'])->name('diagnosis.update');
-    Route::delete('/destroy', [DiagnosisController::class, 'destroy'])->name('diagnosis.destroy');
+Route::group(['middleware' => 'guest', 'prefix' => '/patient/medical-record'], function () {
+    Route::post('/store/{patient}', [MedicalRecordController::class, 'store'])->name('medicalRecord.store');
+    Route::put('/update', [MedicalRecordController::class, 'update'])->name('medicalRecord.update');
+    Route::delete('/destroy', [MedicalRecordController::class, 'destroy'])->name('medicalRecord.destroy');
 });

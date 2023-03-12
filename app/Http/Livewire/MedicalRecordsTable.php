@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Diagnosis;
+use App\Models\MedicalRecord;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class DiagnosisTable extends PowerGridComponent
+final class MedicalRecordsTable extends PowerGridComponent
 {
     use ActionButton;
 
@@ -59,11 +59,11 @@ final class DiagnosisTable extends PowerGridComponent
     /**
      * PowerGrid datasource.
      *
-     * @return Builder<\App\Models\Diagnosis>
+     * @return Builder<\App\Models\MedicalRecord>
      */
     public function datasource(): Builder
     {
-        return Diagnosis::query()->where('patient', $this->patient);
+        return MedicalRecord::query()->where('patient', $this->patient);
     }
 
     /*
@@ -100,7 +100,8 @@ final class DiagnosisTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('diagnosis')
-            ->addColumn('prescription')
+            ->addColumn('findings')
+            ->addColumn('plan')
             ->addColumn('date')
             ->addColumn('doctor');
     }
@@ -130,11 +131,17 @@ final class DiagnosisTable extends PowerGridComponent
                 ->searchable()
                 ->editOnClick(true, 'diagnosis', null, true),
             Column::add()
-                ->title('PRESCRIPTION')
-                ->field('prescription')
+                ->title('FINDINGS')
+                ->field('findings')
                 ->sortable()
                 ->searchable()
-                ->editOnClick(true, 'prescription', null, true),
+                ->editOnClick(true, 'findings', null, true),
+            Column::add()
+                ->title('PLAN')
+                ->field('plan')
+                ->sortable()
+                ->searchable()
+                ->editOnClick(true, 'plan', null, true),
             Column::add()
                 ->title('ISSUED DATE')
                 ->field('date')
@@ -146,7 +153,7 @@ final class DiagnosisTable extends PowerGridComponent
                 ->title('DOCTOR/CONSULTANT')
                 ->field('doctor')
                 ->makeInputSelect(
-                    Diagnosis::distinct()->get('doctor'),
+                    MedicalRecord::distinct()->get('doctor'),
                     'doctor'
                 )
                 ->sortable()
@@ -155,10 +162,24 @@ final class DiagnosisTable extends PowerGridComponent
         ];
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Actions Method
+    |--------------------------------------------------------------------------
+    | Enable the method below only if the Routes below are defined in your app.
+    |
+    */
+
+    /**
+     * PowerGrid MedicalRecord Action Buttons.
+     *
+     * @return array<int, Button>
+     */
+
     public function onUpdatedEditable($id, $field, $value): void
     {
         $this->validate();
-        Diagnosis::query()->find($id)->update([$field => $value]);
+        MedicalRecord::query()->find($id)->update([$field => $value]);
     }
 
     public function header(): array
@@ -171,27 +192,11 @@ final class DiagnosisTable extends PowerGridComponent
                     'showModal',
                     [
                         'editing' => false,
-                        'title' => 'Add Medical Record',
                         'patient' => $this->patient
                     ]
                 ),
         ];
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Actions Method
-    |--------------------------------------------------------------------------
-    | Enable the method below only if the Routes below are defined in your app.
-    |
-    */
-
-    /**
-     * PowerGrid Diagnosis Action Buttons.
-     *
-     * @return array<int, Button>
-     */
 
 
     public function actions(): array
@@ -203,12 +208,12 @@ final class DiagnosisTable extends PowerGridComponent
                     'showModal',
                     [
                         'editing' => true,
-                        'title' => 'Editing Medical Record',
                         'id' => 'id',
                         'date' => 'date',
                         'diagnosis' => 'diagnosis',
+                        'findings' => 'findings',
                         'doctor' => 'doctor',
-                        'prescription' => 'prescription'
+                        'plan' => 'plan'
                     ]
                 ),
             Button::make('destroy', 'Delete')
@@ -232,7 +237,7 @@ final class DiagnosisTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Diagnosis Action Rules.
+     * PowerGrid MedicalRecord Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -244,7 +249,7 @@ final class DiagnosisTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($diagnosis) => $diagnosis->id === 1)
+                ->when(fn($medical-record) => $medical-record->id === 1)
                 ->hide(),
         ];
     }

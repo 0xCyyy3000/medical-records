@@ -20,7 +20,7 @@ class PatientController extends Controller
             'gender' => 'required',
             'birthdate' => ['required', 'date'],
             'birthplace' => ['required', 'max:255'],
-            'email' => $request->email ? ['email:rfc,dns, unique:patients', 'max:255'] : '',
+            'email' => 'nullable|unique:patients|email:rfc,dns|max:255',
             'phone_number' => ['required', 'unique:patients', 'digits:11', 'numeric'],
         ]);
 

@@ -40,19 +40,19 @@
     <div class="modal fade" id="addMedicalRecord" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="medicalRecordLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form method="POST" action="{{ route('diagnosis.store', ['patient' => $patient->id]) }}">
+            <form method="POST" action="{{ route('medicalRecord.store', ['patient' => $patient->id]) }}">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header border-0">
-                        <h1 class="modal-title fs-5" id="medicalRecordLabel">Add Medical Record</h1>
+                        <h1 class="modal-title fs-5">Add Medical Record</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row g-3 p-2">
                             <div class="col-md-5">
                                 <label for="date" class="form-label">Issued Date</label>
-                                <input type="text" placeholder="mm/dd/yyyy" class="form-control date-issue"
-                                    name="date" readonly required>
+                                <input type="date" placeholder="mm/dd/yyyy" class="form-control date-issue"
+                                    name="date" required>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
@@ -62,14 +62,20 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" required placeholder="Diagnosis/Findings"name="diagnosis" style="height: 100px"></textarea>
-                                    <label for="diagnosis">Diagnosis/Findings</label>
+                                    <textarea class="form-control" required placeholder="Diagnosis"name="diagnosis" style="height: 100px"></textarea>
+                                    <label for="diagnosis">Diagnosis</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" required placeholder="Findings"name="findings" style="height: 100px"></textarea>
+                                    <label for="findings">Findings</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" required placeholder="Prescription"name="prescription" style="height: 100px"></textarea>
-                                    <label for="prescription">Prescription</label>
+                                    <textarea class="form-control" required placeholder="Plan"name="plan" style="height: 100px"></textarea>
+                                    <label for="plan">Plan</label>
                                 </div>
                             </div>
                         </div>
@@ -88,20 +94,21 @@
     <div class="modal fade" id="editMedicalRecord" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="editMedicalRecordLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form method="POST" action="{{ route('diagnosis.update') }}">
+            <form method="POST" action="{{ route('medicalRecord.update') }}">
                 @csrf
                 @method('PUT')
                 <div class="modal-content">
                     <div class="modal-header border-0">
-                        <h1 class="modal-title fs-5" id="editMedicalRecordLabel">Add Medical Record</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="modal-title fs-5">Editing Medical Record</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row g-3 p-2">
                             <div class="col-md-5">
                                 <label for="date" class="form-label">Issued Date</label>
-                                <input type="text" placeholder="mm/dd/yyyy" class="form-control date-issue"
-                                    name="date" id="date" readonly required>
+                                <input type="date" placeholder="mm/dd/yyyy" class="form-control date-issue"
+                                    name="date" id="date" required>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
@@ -117,11 +124,16 @@
                                     <label for="diagnosis">Diagnosis/Findings</label>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" required placeholder="Findings"name="findings" id="findings" style="height: 100px"></textarea>
+                                    <label for="findings">Findings</label>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" required placeholder="Prescription"name="prescription" id="prescription"
-                                        style="height: 100px"></textarea>
-                                    <label for="prescription">Prescription</label>
+                                    <textarea class="form-control" required placeholder="plan"name="plan" id="plan" style="height: 100px"></textarea>
+                                    <label for="plan">Plan</label>
                                 </div>
                             </div>
                         </div>
@@ -145,17 +157,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header border-0">
-                    <h1 class="modal-title fs-5" id="removeDiagnosisModalLabel">Removing Medical Record</h1>
+                    <h1 class="modal-title fs-5" id="removeDiagnosisModalLabel">Deleting Medical Record</h1>
                 </div>
                 <div class="modal-body py-2">
-                    You are about to remove this medical record, do you want to proceed?
+                    You are about to delete this medical record, do you want to proceed?
                     <br>This action cannot be undone.
                 </div>
                 <div class="modal-footer border-0 modal-actions">
                     <button type="button" class="btn primary" data-bs-dismiss="modal"
                         style="color: var(--color-white) !important; background: var(--color-info-dark) !important;">No,
                         don't proceed</button>
-                    <form id="deleteDiagnosis" action="{{ route('diagnosis.destroy') }}" method="POST">
+                    <form id="deleteDiagnosis" action="{{ route('medicalRecord.destroy') }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn" name="diagnosis" id="diagnosis_delete"
@@ -284,10 +296,9 @@
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="birthdate" class="form-label">Birthdate</label>
-                        <input type="text" placeholder="mm/dd/yyyy"
+                        <input type="date" placeholder="mm/dd/yyyy"
                             class="form-control @error('birthdate') is-invalid @enderror patient_entities"
-                            id="birthdate" name="birthdate" readonly
-                            value="@if (old('birthdate')) {{ old('birthdate') }}@else{{ Illuminate\Support\Carbon::parse($patient->birthdate)->format('m/d/Y') }} @endif">
+                            id="birthdate" name="birthdate" readonly value="{{ $patient->birthdate }}">
                         @error('birthdate')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -507,7 +518,7 @@
     <div class="row mb-3 p-4" style="--bs-gutter-x: 0rem !important;">
         <div class="bg-white rounded-4 col shadow p-5">
             <h2 class="fw-semibold mb-4 mt-2">Medical Records</h2>
-            <livewire:diagnosis-table patient="{{ $patient->id }}" />
+            <livewire:medical-records-table patient="{{ $patient->id }}" />
         </div>
     </div>
 
@@ -524,11 +535,8 @@
             });
 
             $(document).on('click', '.edit-patient', function() {
-                $('#birthdate').toggleClass('datepicker');
-                $('.datepicker').datepicker({
-                    uiLibrary: 'bootstrap5',
-                })
 
+                $('#birthdate').attr('readonly', false);
                 $('.patient_entities').attr('readonly', false);
                 $('.patient_entities').attr('disabled', false);
 
@@ -539,12 +547,6 @@
             $(document).on('click', '.cancel-edit', function() {
                 location.reload();
             });
-
-            $('.date-issue').datepicker({
-                uiLibrary: 'bootstrap5',
-                modal: true,
-                footer: true,
-            })
         });
     </script>
 

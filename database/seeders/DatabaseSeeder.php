@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Address;
 use App\Models\Diagnosis;
+use App\Models\MedicalRecord;
 use App\Models\Patient;
 use App\Models\Position;
 use App\Models\User;
@@ -80,12 +81,13 @@ class DatabaseSeeder extends Seeder
             'weight' => '79 kg'
         ]);
 
-        Diagnosis::create([
+        MedicalRecord::create([
             'patient' => 1,
             'doctor' => 'Cyril Jan B. Alonzo MD',
             'diagnosis' => 'Utot ubo',
-            'prescription' => 'Inom lan tubig kana 50 liters 😂',
-            'date' => 'Jan 12, 2023'
+            'findings' => 'Utot ubo',
+            'plan' => 'Inom lan tubig kana 50 liters 😂',
+            'date' => '2023-01-09'
         ]);
     }
 }

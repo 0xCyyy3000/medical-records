@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="birthdate" class="form-label">Birthdate</label>
-                    <input type="text" placeholder="mm/dd/yyyy"
+                    <input type="date" placeholder="mm/dd/yyyy"
                         class="form-control @error('birthdate') is-invalid @enderror" id="birthdate" name="birthdate"
                         value="{{ old('birthdate') }}" autocomplete="off">
                     @error('birthdate')
@@ -111,8 +111,8 @@
                 <div class="col-md-4 mb-3">
                     <label for="phone_number" class="form-label">Phone number</label>
                     <input type="number" class="form-control @error('phone_number') is-invalid @enderror"
-                        id="phone_number" name="phone_number" placeholder="11 digit number"
-                        value="{{ old('phone_number') }}">
+                        id="phone_number" min="0" maxlength="11" name="phone_number"
+                        placeholder="11 digit number" value="{{ old('phone_number') }}">
                     @error('phone_number')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -152,7 +152,8 @@
                 <div class="col-md-2">
                     <label for="zip_code" class="form-label">Zip code</label>
                     <input type="number" class="form-control @error('zip_code') is-invalid @enderror"
-                        id="zip_code" name="zip_code" placeholder="6500" value="{{ old('zip_code') }}">
+                        id="zip_code" maxlength="5" min="0" name="zip_code" placeholder="6500"
+                        value="{{ old('zip_code') }}">
                     @error('zip_code')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -233,16 +234,33 @@
                     class="text-decoration-none float-end p-2 primary me-4">Cancel</a>
             </div>
         </form>
-
-        <script>
-            $(document).ready(function() {
-                $('#birthdate').datepicker({
-                    uiLibrary: 'bootstrap5',
-                    // modal: true,
-                    footer: true,
-                    value: new Date().toLocaleDateString(),
-                })
-            });
-        </script>
     </div>
+
+    <script>
+        const inputBox = document.getElementById("inputBox");
+        const invalidChars = ["-", "+", "e", "."];
+        document.getElementById('phone_number').addEventListener("keydown", function(e) {
+            if (invalidChars.includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        document.getElementById('phone_number').oninput = function() {
+            if (this.value.length > this.maxLength) {
+                this.value = this.value.slice(0, this.maxLength);
+            }
+        };
+
+        document.getElementById('zip_code').addEventListener("keydown", function(e) {
+            if (invalidChars.includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        document.getElementById('zip_code').oninput = function() {
+            if (this.value.length > this.maxLength) {
+                this.value = this.value.slice(0, this.maxLength);
+            }
+        };
+    </script>
 </x-layout>

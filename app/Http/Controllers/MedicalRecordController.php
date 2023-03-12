@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Patient;
-use App\Models\Diagnosis;
+use App\Models\MedicalRecord;
 use Illuminate\Http\Request;
 
-class DiagnosisController extends Controller
+class MedicalRecordController extends Controller
 {
     public function destroy(Request $request)
     {
-        $deleted = Diagnosis::where('id', $request->diagnosis)->delete();
+        $deleted = MedicalRecord::where('id', $request->diagnosis)->delete();
         if ($deleted) {
             return back()->with('status', 'Deleted successfully!');
         }
-        return back()->with('status', 'There was a problem deleting diagnosis');
+        return back()->with('status', 'There was a problem deleting the record');
     }
 
     public function store(Request $request)
     {
-        $stored = Diagnosis::create([
+        $stored = MedicalRecord::create([
             'patient' => intval($request->patient),
             'diagnosis' => $request->diagnosis,
-            'prescription' => $request->prescription,
+            'findings' => $request->findings,
+            'plan' => $request->plan,
             'date' => $request->date,
             'doctor' => $request->doctor
         ]);
@@ -35,11 +35,12 @@ class DiagnosisController extends Controller
 
     public function update(Request $request)
     {
-        $updated = Diagnosis::where('id', $request->did)->update([
+        $updated = MedicalRecord::where('id', $request->did)->update([
             'date' => $request->date,
             'diagnosis' => $request->diagnosis,
+            'findings' => $request->findings,
             'doctor' => $request->doctor,
-            'prescription' => $request->prescription
+            'plan' => $request->plan
         ]);
 
         if ($updated) {

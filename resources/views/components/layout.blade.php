@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
     <script src="{{ asset('js/jquery-3.6.3.min.js') }}"></script>
-    <script src="{{ asset('js/gijgo.min.js') }}" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @livewireStyles
@@ -116,14 +114,14 @@
     @powerGridScripts
     <script>
         Livewire.on('showModal', data => {
-            $('#medicalRecordLabel').text(data.title);
             if (data.editing) {
                 $('#date').val(data.date);
                 $('#diagnosis').val(data.diagnosis);
+                $('#findings').val(data.findings);
                 $('#doctor').val(data.doctor);
-                $('#prescription').val(data.prescription);
-                $("#editMedicalRecord").modal('show');
+                $('#plan').val(data.plan);
                 $('#diagnosis_edit').val(data.id);
+                $("#editMedicalRecord").modal('show');
             } else
                 $("#addMedicalRecord").modal('show');
         });
